@@ -12,6 +12,14 @@ module.exports = (app: any) => {
   const Models: any = require('../models/User');
 
   router.post('/user', Middleware.PostUser, (req: any, res: any) => {
+
+    if (req.body.User_Type == 'admin' && req.body.Passcode != '') {
+      return cb({
+        'code': 403,
+        'payload': 'Incorrect passcode...'
+      });
+    }
+
     req
     .getValidationResult()
     .then((result: any) => {

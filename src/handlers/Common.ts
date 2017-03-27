@@ -2,7 +2,7 @@ module.exports = (app: any) => {
 
   const router: any = app.get('router');
 
-  app.get('/ping', (req: any, res: any) => {
+  router.get('/ping', (req: any, res: any) => {
     if (!req.session.User) {
       return res.status(403).send("No user...");
     } else {
@@ -13,7 +13,7 @@ module.exports = (app: any) => {
     }
   });
 
-  app.get('/logout', (req: any, res: any) => {
+  router.get('/logout', (req: any, res: any) => {
    if (!req.session.User) {
      return res.status(403).send("Not logged in...");
    } else {

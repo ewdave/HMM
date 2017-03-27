@@ -4,15 +4,8 @@ let uuid: any = require('uuid');
 module.exports.PostUser = (req: any, cb: any) => {
   req.async.series(
       [
-        (callback) => {
-          if (req.body.User_Type == 'admin' && req.body.Passcode != 'Collegiate1!') {
-            return cb({
-              'code': 403,
-              'payload': 'Incorrect passcode...'
-            });
-          }
-
-          db.query(
+        (callback: any) => {
+          req.db.query(
             `
             SELECT * FROM User
             WHERE User_Email = :User_Email
@@ -21,7 +14,7 @@ module.exports.PostUser = (req: any, cb: any) => {
             {
               'User_Email': req.body.User_Email
             },
-            (err, rows) => {
+            (err: any, rows: any) => {
               if (err) {
                 console.log(err);
                 return cb({
@@ -35,26 +28,28 @@ module.exports.PostUser = (req: any, cb: any) => {
                     'payload': 'Email already in use...'
                   });
                 } else {
-                  callback();
+                  return callback();
                 }
               }
             }
           );
         },
-        (callback) => {
+        (callback: any) => {
           req.body.User_Id = uuid.v4();
+
           if (req.body.User_Password != req.body.User_Password_Confirm) {
             return cb({
               'code': 400,
               'payload': 'Incorrect password...'
             });
           }
+
           req.body.User_Password = bcrypt.hashSync(req.body.User_Password, 10);
           req.body.User_DateCreated = Number(new Date());
           req.body.User_DateUpdated = Number(new Date());
           req.body.User_AccountStatus = "active";
-          delete req.body.User_Password_Confirm;
-           db.query(
+
+           req.db.query(
             `
                 INSERT INTO User SET
                 User_Id = :User_Id,
@@ -66,7 +61,7 @@ module.exports.PostUser = (req: any, cb: any) => {
                 User_DateUpdated = :User_DateUpdated
             `,
             req.body,
-            (err, rows) => {
+            (err: any, rows: any) => {
               if (err) {
                 console.log(err);
                 return cb({
@@ -87,7 +82,7 @@ module.exports.PostUser = (req: any, cb: any) => {
 }
 
 module.exports.PostUserLogin = (req: any, cb: any) => {
-  db.query(
+  req.db.query(
     `
     SELECT * FROM User
     WHERE User_Email = :User_Email
