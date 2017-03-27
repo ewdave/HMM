@@ -45,7 +45,7 @@ app.use(ExpressValidator());
 app.use(
   Session({
     store: new RedisStore(Environment['Redis']),
-    secret: 'Favourly',
+    secret: '',
     resave: false,
     saveUninitialized: false
   })
