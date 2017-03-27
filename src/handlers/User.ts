@@ -14,10 +14,7 @@ module.exports = (app: any) => {
   router.post('/user', Middleware.PostUser, (req: any, res: any) => {
 
     if (req.body.User_Type == 'admin' && req.body.Passcode != '') {
-      return cb({
-        'code': 403,
-        'payload': 'Incorrect passcode...'
-      });
+      return res.status(403).send("Incorrect passcode...");
     }
 
     req
