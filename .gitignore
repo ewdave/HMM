@@ -1,3 +1,10 @@
+# HMM Files
+build/*
+!build/.gitkeep
+
+uploads/*
+!uploads/.gitkeep
+
 # Logs
 logs
 *.log
