@@ -53,7 +53,9 @@ app.use(
 
 const upload = Multer({ dest: 'uploads/' });
 app.use('/uploads', Express.static('./uploads'));
+
 app.set('router', Express.Router());
+app.set('upload', upload);
 
 app.use((req: any, res: any, next: any) => {
   req.db = DB;
