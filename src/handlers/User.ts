@@ -1,12 +1,6 @@
 module.exports = (app: any) => {
 
-  const db: any = app.get('db');
-  const bcrypt: any = app.get('bcrypt');
-  const async: any = app.get('async');
   const router: any = app.get('router');
-  const uuid: any = app.get('uuid');
-  const upload: any = app.get('upload');
-
   const Middleware: any = require('../middleware/User');
   const Common: any = require('../middleware/Common');
   const Models: any = require('../models/User');
