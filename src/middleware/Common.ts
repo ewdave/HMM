@@ -1,4 +1,4 @@
-module.exports.CookieUser = (req, res, next) => {
+module.exports.Auth = (req: any, res: any, next: any) => {
   req.checkCookies('connect.sid', 'Need to be logged in').notEmpty();
-  next();
+  return next();
 }
